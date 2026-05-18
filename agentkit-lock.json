@@ -1,0 +1,10 @@
+{
+  "lockfileVersion": 1,
+  "skills": {
+    "fagom/smart-commit": {
+      "version": "main",
+      "resolved": "github:fagom/smart-commit#main",
+      "sha": "81ea1332036c55023f0505d1b1fc0456af4056ae"
+    }
+  }
+}

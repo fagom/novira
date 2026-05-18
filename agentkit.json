@@ -1,0 +1,7 @@
+{
+  "name": "novira",
+  "version": "1.0.0",
+  "skills": {
+    "fagom/smart-commit": "*"
+  }
+}
