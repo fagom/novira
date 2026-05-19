@@ -45,7 +45,11 @@ cp .env.example .env
 │   │   ├── src/
 │   │   ├── package.json
 │   │   └── tsconfig.json
-│   └── calculator-client/        # Calculator MCP client (tests server)
+│   ├── calculator-client/        # Calculator MCP client (tests server)
+│   │   ├── src/
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   └── llm-client/               # LLM client with tool calling integration
 │       ├── src/
 │       ├── package.json
 │       └── tsconfig.json
@@ -96,6 +100,29 @@ A test client that demonstrates how to connect to and consume MCP servers.
 - Invokes prompts and demonstrates client-server communication
 - Example of MCP client implementation using the official SDK
 
+#### LLM Client
+
+An advanced client that integrates MCP servers with LLMs for intelligent tool calling.
+
+**Location:** `./mcp/llm-client`
+
+**Status:** ✅ Implemented
+
+**Features:**
+
+- Connects to MCP servers and discovers available tools
+- Adapts MCP tools to OpenAI-compatible format (JSON schema)
+- Queries LLMs (Gemini 2.5 Flash Lite) with tool calling capabilities
+- Processes LLM responses and automatically calls appropriate tools
+- Handles tool results and integrates them back into the workflow
+- Demonstrates agentic patterns with tool use and reasoning
+- Supports environment configuration via `.env`
+
+**Dependencies:**
+- OpenAI SDK for LLM integration
+- dotenv for environment configuration
+- MCP SDK for server communication
+
 ---
 
 ## Planned Components
@@ -104,8 +131,9 @@ A test client that demonstrates how to connect to and consume MCP servers.
 - [ ] Weather/climate integration
 - [ ] Note-taking and memory MCP server
 - [ ] Calendar integration
-- [ ] Custom agents for specific workflows
+- [ ] Multi-turn agentic loops with reasoning
 - [ ] Retrieval-augmented generation (RAG) agent
+- [ ] Custom agents for specific workflows
 
 ## Development
 
@@ -143,6 +171,33 @@ npm run build
 npm start
 ```
 
+### Building LLM Client
+
+The LLM client integrates MCP servers with language models:
+
+```bash
+cd mcp/llm-client
+
+# Install dependencies
+npm install
+
+# Create .env file with LLM credentials
+cp .env.example .env
+# Edit .env and add your LLM API keys and configuration
+
+# Build
+npm run build
+
+# Run (connects to calculator-server and queries LLM with tool calling)
+npm start
+```
+
+**Required environment variables:**
+```env
+OPENAI_BASE_URL=<your-llm-api-endpoint>
+OPENAI_API_KEY=<your-api-key>
+```
+
 ### Building Agents
 
 Agents will be implemented using AgentKit and OpenClaw patterns.
@@ -165,10 +220,12 @@ This is a personal project. If you have suggestions or improvements, feel free t
 - [x] Initial project setup with AgentKit
 - [x] Calculator MCP server with tools, prompts, and resources
 - [x] Calculator MCP client implementation
+- [x] LLM client with tool calling integration
 - [ ] Phase 2: Additional MCP servers (task management, weather, notes)
-- [ ] Phase 3: Custom agents
-- [ ] Phase 4: Full assistant deployment
-- [ ] Phase 5: Production optimization
+- [ ] Phase 3: Agentic loops and multi-turn interactions
+- [ ] Phase 4: Custom agents and orchestration
+- [ ] Phase 5: Full assistant deployment
+- [ ] Phase 6: Production optimization and scaling
 
 ## Architecture Notes
 
