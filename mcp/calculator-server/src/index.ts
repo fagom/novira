@@ -5,10 +5,19 @@ import {
 import { z } from "zod";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
-const server = new McpServer({
-  name: "Calculator Server",
-  version: "1.0.0",
-});
+const server = new McpServer(
+  {
+    name: "Calculator Server",
+    version: "1.0.0",
+  },
+  {
+    capabilities: {
+      prompts: {
+        listChanged: true,
+      },
+    },
+  },
+);
 
 server.tool("add", { a: z.number(), b: z.number() }, ({ a, b }) => ({
   content: [{ type: "text", text: String(a + b) }],
@@ -20,6 +29,23 @@ server.registerTool(
     inputSchema: { a: z.number(), b: z.number() },
   },
   ({ a, b }) => ({ content: [{ type: "text", text: String(a - b) }] }),
+);
+
+server.registerPrompt(
+  "test-prompt",
+  { argsSchema: { input: z.string() } },
+  ({ input }) => ({
+    messages: [
+      {
+        role: "assistant",
+        content: {
+          type: "text",
+          text:
+            "You are given an input string, make a meaning out of it: " + input,
+        },
+      },
+    ],
+  }),
 );
 
 server.resource(

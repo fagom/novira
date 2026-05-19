@@ -40,8 +40,12 @@ cp .env.example .env
 
 ```
 .
-├── mcp/                          # MCP (Model Context Protocol) servers
-│   └── calculator-server/        # Basic calculator MCP server
+├── mcp/                          # MCP (Model Context Protocol) servers and clients
+│   ├── calculator-server/        # Calculator MCP server
+│   │   ├── src/
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   └── calculator-client/        # Calculator MCP client (tests server)
 │       ├── src/
 │       ├── package.json
 │       └── tsconfig.json
@@ -58,7 +62,7 @@ cp .env.example .env
 
 #### Calculator Server
 
-Basic math operations MCP server built with TypeScript.
+A complete MCP (Model Context Protocol) server built with TypeScript that provides math operations, dynamic prompts, and resources.
 
 **Location:** `./mcp/calculator-server`
 
@@ -66,8 +70,31 @@ Basic math operations MCP server built with TypeScript.
 
 **Features:**
 
-- Basic arithmetic operations
-- Math utilities
+- **Tools:** 
+  - `add(a, b)` - Add two numbers
+  - `subtract(a, b)` - Subtract two numbers
+- **Prompts:**
+  - `test-prompt` - Dynamic prompt that takes user input and generates meaningful output
+- **Resources:**
+  - `greeting://{name}` - Returns personalized greeting messages
+- Type-safe operations with Zod validation
+
+### MCP Clients
+
+#### Calculator Client
+
+A test client that demonstrates how to connect to and consume MCP servers.
+
+**Location:** `./mcp/calculator-client`
+
+**Status:** ✅ Implemented
+
+**Features:**
+
+- Connects to calculator-server via stdio transport
+- Lists all available tools, resources, and prompts
+- Invokes prompts and demonstrates client-server communication
+- Example of MCP client implementation using the official SDK
 
 ---
 
@@ -99,6 +126,23 @@ npm run build
 npm start
 ```
 
+### Building MCP Clients
+
+MCP clients connect to servers and consume their capabilities:
+
+```bash
+cd mcp/calculator-client
+
+# Install dependencies
+npm install
+
+# Build
+npm run build
+
+# Run (starts calculator-server automatically)
+npm start
+```
+
 ### Building Agents
 
 Agents will be implemented using AgentKit and OpenClaw patterns.
@@ -119,8 +163,9 @@ This is a personal project. If you have suggestions or improvements, feel free t
 ## Roadmap
 
 - [x] Initial project setup with AgentKit
-- [x] Calculator MCP server
-- [ ] Phase 2: Core MCP integrations
+- [x] Calculator MCP server with tools, prompts, and resources
+- [x] Calculator MCP client implementation
+- [ ] Phase 2: Additional MCP servers (task management, weather, notes)
 - [ ] Phase 3: Custom agents
 - [ ] Phase 4: Full assistant deployment
 - [ ] Phase 5: Production optimization
